@@ -3,5 +3,16 @@
   "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
   "files.autoSave": "onFocusChange",
-  "editor.formatOnPaste": true
+  "editor.formatOnPaste": true,
+  "eslint.quiet": true,
+  "eslint.codeAction.showDocumentation": {
+
+    "enable": true
+  },
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.format.enable": true,
+  "eslint.rules.customizations": [
+  
+  ],
+  "eslint.run": "onSave",
 }

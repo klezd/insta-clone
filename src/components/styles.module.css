@@ -1,0 +1,37 @@
+.authModal {
+  min-width: 450px;
+  height: max-content;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  padding: 12px;
+}
+
+.modalNav {
+  text-align: center;
+  color: var(--primary-text);
+  font-weight: 500;
+  font-size: large;
+  padding: 16px;
+  border-bottom: solid 1px var(--light-grey);
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px;
+}
+
+.button {
+  background-color: var(--google-bg);
+  color: #fff;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px #000;
+}
+
+.button span {
+  margin-left: 16px;
+  margin-right: 24px;
+}
