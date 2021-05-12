@@ -31,14 +31,14 @@
   text-align: right;
 }
 
-.App-logo {
-  padding: 12px;
-  font-weight: 500;
+.App-header > div {
+  padding: 12px
 }
+/* .App-navigation {} */
 
-.App-action {
+.App-logo {  font-weight: 500; font-size: 1.75rem; }
 
-}
+/* .App-action { } */
 
 .App-container {
   overflow-y: auto;
@@ -46,6 +46,9 @@
   top: 60px;
   bottom: 50px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-footer {

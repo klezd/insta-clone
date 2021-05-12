@@ -1,0 +1,209 @@
+/* Main */
+.iconBtn {
+  display: block;
+}
+
+.iconBtn:hover {
+  cursor: pointer;
+  color: var(--primary-text-hover);
+}
+
+.bigIconBtn {
+  font-size: 36px;
+  padding: 32px 48px 36px;
+  border-radius: 50%;
+  background-color: inherit;
+}
+
+.bigIconBtn:hover {
+ box-shadow:  rgb(0 0 0 / 10%) 0px -10px 10px 1px inset;
+ cursor: pointer;
+}
+
+/* Page styles */
+
+.PageRoot {
+  width: 80%;
+  max-width: 1170px;
+  padding: 12px;
+}
+
+/* Start USERPAGE + FEEDPAGE */
+.pageHeader.userPage {
+  border-bottom: 1px solid var(--light-grey);
+  display: grid;
+  padding: 12px;
+  grid-template-columns: 150px 1fr ;
+}
+
+.userAvt img {
+  width: 80%;
+  max-width: 120px;
+  border-radius: 50%;
+}
+
+.userTitle {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 16px;
+}
+
+.userTitle > div:first-of-type {
+  max-width: 75%;
+}
+
+.userName {
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.statusLine {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.statusBtn {
+  font-size: 16px;
+  width: max-content;
+  align-self: flex-end;
+  padding: 4px 8px;
+  box-shadow: 3px 3px 3px 3px transparent;
+  transition: ease-out 0.1s;
+}
+
+.statusBtn:hover {
+  cursor: pointer;
+  padding-bottom: 8px;
+  box-shadow: 3px 3px 3px 3px var(--light-grey);
+}
+
+.pageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.pageContainer > div {
+  margin: 8px 0;
+  padding: 4px;
+  width: 375px;
+  box-shadow: 3px 3px 3px transparent;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.pageContainer > div:hover {
+  box-shadow: 3px 3px 3px var(--light-grey);
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
+}
+
+.image {
+  height: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+.pageContainer>div:hover .authorContainer {
+  opacity: 1;
+}
+.authorContainer {
+  opacity: 0;
+  transition: ease-in 1s;
+  width: 100%;
+  padding: 4px 16px;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  background-color: rgba(0, 0, 0, 0.384);
+  color: #fff;
+}
+
+.authorContainer img {
+  width: 20%;
+  border-radius: 50%;
+}
+
+.authorContainer div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+/* End USERPAGE + FEEDPAGE */
+
+/* Start POSTPAGE */
+.navPage {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+}
+
+.navPage img {
+  width: 45px;
+  border-radius: 50%;
+}
+
+.navPage div {
+  display: flex;
+  align-items: center;
+}
+.navLeft div {
+  margin-left: 12px;
+}
+
+.postContent img {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid var(--light-grey);
+  max-width: 90%;
+}
+
+.postContent div {
+  text-align: justify;
+  padding: 24px;
+}
+/* End POSTPAGE */
+
+@media screen and (max-width: 600px) {
+  /* Start USERPAGE + FEEDPAGE */
+  .pageHeader.userPage {
+    grid-template-columns: 100px 1fr;
+  }
+  .userTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 16px;
+  }
+  .statusBtn {
+    font-size: 3vmin;
+  }
+  .pageContainer > div {
+    width: 100%;
+  }
+
+  /* End USERPAGE + FEEDPAGE */
+
+}
+@media screen and (max-width: 1200px) {
+  /* Start USERPAGE + FEEDPAGE */
+  .PageRoot {
+    width: 100%;
+    padding: 16px;
+  }
+  .pageContainer>div {
+    width: 49%;
+  }
+
+  /* End USERPAGE + FEEDPAGE */
+
+}

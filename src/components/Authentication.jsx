@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
-import Dialog from '@material-ui/core/Dialog';
 import styles from './styles.module.css';
+import Modal from './common/Modal';
+
+import { loginWithGoogleAction } from '../store/userAction';
 
 Authentication.propTypes = {
 	display: PropTypes.bool,
@@ -13,40 +14,35 @@ Authentication.propTypes = {
 };
 
 export default function Authentication(props) {
-	const rootStyles = props.display
-		? styles.authRoot
-		: [styles.authRoot, styles.hidden].join(' ');
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const dispatch = useDispatch();
 
 	const onClose = () => {
 		props.onClose();
 	};
 
-	const loginWithGoogle = () => {
-		// TODO Login with google
+	const loginWithGoogle = async () => {
+		dispatch(loginWithGoogleAction());
 		onClose();
 	};
 
 	return (
-		<div className={rootStyles}>
-			<Dialog
-				onClose={onClose}
-				open={props.display}
-				aria-labelledby="auth-Dialog"
-				fullScreen={fullScreen}
-				scroll="paper"
-			>
-				<div className={styles.authModal}>
-					<div className={styles.modalNav}>LOGIN</div>
-					<div className={styles.modalBody}>
-						<div className={styles.button} onClick={() => loginWithGoogle()}>
-							<FontAwesomeIcon icon={['fab', 'google']} />
-							<span>Login With Google</span>
-						</div>
+		<Modal display={props.display} onClose={onClose}>
+			<div className={styles.authModal}>
+				<div className={styles.modalNav}>
+					<div></div>
+					<div className={styles.title}>LOGIN</div>
+					<div></div>
+				</div>
+				<div className={styles.modalBody}>
+					<div
+						className={[styles.GGbutton, styles.button].join(' ')}
+						onClick={() => loginWithGoogle()}
+					>
+						<FontAwesomeIcon icon={['fab', 'google']} />
+						<span>Login With Google</span>
 					</div>
 				</div>
-			</Dialog>
-		</div>
+			</div>
+		</Modal>
 	);
 }

@@ -1,0 +1,41 @@
+{
+	"authLoading": false,
+	"user": {
+		"uid": "whaIUAyCvyMe1z3LTKCvBmgsMKa2",
+		"displayName": "Sienna Dao",
+		"photoURL": "https://lh3.googleusercontent.com/a-/AOh14GhOmjZexzbzenAl7ZkWU5plCQH55FuZvRecM0k3=s96-c",
+		"email": "siennad97@gmail.com",
+		"emailVerified": true,
+		"phoneNumber": null,
+		"isAnonymous": false,
+		"tenantId": null,
+		"providerData": [
+			{
+				"uid": "105015326498855439617",
+				"displayName": "Sienna Dao",
+				"photoURL": "https://lh3.googleusercontent.com/a-/AOh14GhOmjZexzbzenAl7ZkWU5plCQH55FuZvRecM0k3=s96-c",
+				"email": "siennad97@gmail.com",
+				"phoneNumber": null,
+				"providerId": "google.com"
+			}
+		],
+		"apiKey": "AIzaSyCbiLpVnbF0HTUrP8z_zYmiLscd98eeI9w",
+		"appName": "[DEFAULT]",
+		"authDomain": "insta-clone-eda38.firebaseapp.com",
+		"stsTokenManager": {
+			"apiKey": "AIzaSyCbiLpVnbF0HTUrP8z_zYmiLscd98eeI9w",
+			"refreshToken": "AGEhc0D8oeI9DlqQ47WmvDQcIONArwh4Kczk397vWGxn1esx2WJE9mo4agR5i8ecKLUUPiaiY4xDtNZijUKzcg89VV5iBzTgdyVz6rzMI2hD7o3jr-V2GK7uYVmSb_sgaV4w_g05ZeyGmsoTSQLyKBa4FFM7BpIOYf6LMbL9eFJMPVci__zmSFhsxhjbkbEtQUAgRf-tK9rttiyslnW-xtVifi6F5NB536a4op04GBF6z0CO3MXUgo7EyoViq2Bz6eRJn9KvnJouX76GtJU2Nk7Lywonj1fcDP76lTV6slvTRZAlx8hlC7Lxny4DOsr7Tk1KQ0LcIMvryeck58UzR58nWarbAmvsCcTjQpw7QMBFVm-DyMM-ZOQ6FGi96DahsY9oGdsA-hsPEh7w7zQomBezbFWw1hQa7YXYBD-sn0kHH7_N7hbxNFQ",
+			"accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzNmRhZWFiZjhkZDY1ZDRkZTIxZTgyNGI4OTlhMWYzZGEyZjg5NTgiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiU2llbm5hIERhbyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHaE9talpleHpiemVuQWw3WmtXVTVwbENRSDU1RnVadlJlY00wazM9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vaW5zdGEtY2xvbmUtZWRhMzgiLCJhdWQiOiJpbnN0YS1jbG9uZS1lZGEzOCIsImF1dGhfdGltZSI6MTYyMDY4NDU4NSwidXNlcl9pZCI6IndoYUlVQXlDdnlNZTF6M0xUS0N2Qm1nc01LYTIiLCJzdWIiOiJ3aGFJVUF5Q3Z5TWUxejNMVEtDdkJtZ3NNS2EyIiwiaWF0IjoxNjIwNjg0NTg1LCJleHAiOjE2MjA2ODgxODUsImVtYWlsIjoic2llbm5hZDk3QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA1MDE1MzI2NDk4ODU1NDM5NjE3Il0sImVtYWlsIjpbInNpZW5uYWQ5N0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.R7oegwnpyRSK8K895TWVquwrDrzQ2A4alYoos388mrXJv6UppYcR-F6Q-AehcODa-KBpHQ7OU1YTYYGTp7XWX4OEkLHJhvv57E0oivPlZPun-mAMN7-QqQzLYF89EYUhpbFHvV-M6JYFhHfRWHRegWtP9IcoBLhMCx6E0KJY5nvj7tMLh46gnFPmXXXNG9cp5XRnojDU0vS35X51dx40qrBVdd-_8JEMg6zKJPHF5TihDQI_QMnf14_stHiRGD0aNIwK1v_bsA7KtjG7dTjC3rr6Hr70ecVop4UCSAWr-9Ijaixgu9IeLL6R-8SBG0WI943iEhl4clj-O7-xNXT8YA",
+			"expirationTime": 1620688185751
+		},
+		"redirectEventId": null,
+		"lastLoginAt": "1620684585582",
+		"createdAt": "1620684028422",
+		"multiFactor": {
+			"enrolledFactors": []
+		}
+	},
+	"error": null,
+	"errorCode": null,
+	"errorMsg": null
+}

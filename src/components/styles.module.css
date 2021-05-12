@@ -1,16 +1,32 @@
 .authModal {
   min-width: 450px;
-  height: max-content;
+  height: 100%;
   display: grid;
   grid-template-rows: 50px 1fr;
   padding: 12px;
 }
 
+.uploadModal {
+  min-width: 600px;
+  height: 100%;
+  padding: 16px;
+  grid-template-rows: 50px 1fr;
+  display: grid;
+}
+
 .modalNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+.modalNav .title{
   text-align: center;
   color: var(--primary-text);
   font-weight: 500;
-  font-size: large;
+  font-size: 1.5em;
   padding: 16px;
   border-bottom: solid 1px var(--light-grey);
 }
@@ -18,17 +34,50 @@
 .modalBody {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 12px;
 }
 
-.button {
+.modalBody div {
+  margin: 16px 0;
+}
+
+.modalBody div:last-of-type {
+  margin-bottom: 8px;
+}
+
+.statusInput {
+  width: 90%;
+}
+
+.photoHolder {
+  max-width: 90%;
+  margin: auto;
+}
+.photoHolder img {
+ max-width: 100%;
+}
+
+.GGbutton {
   background-color: var(--google-bg);
   color: #fff;
   padding: 12px;
   border-radius: 3px;
   box-shadow: 2px 2px 2px #000;
+}
+
+.uploadButton {
+  background-color: var(--primary);
+  color: var(--primary-text);
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px #000;
+}
+
+.button:hover {
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .button span {
