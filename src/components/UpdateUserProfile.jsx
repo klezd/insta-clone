@@ -6,13 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import styles from './styles.module.css';
 import Modal from './common/Modal';
 import ImageInput from './common/ImageInput';
-
-import { addUserInfo, getUserInfo } from '../store/userAction';
-import { uploadToFirebase } from '../store/dataAction';
 import withAuthorize from './HOC/withAuthorize';
+
+import { addUserInfo, getUserInfo } from '../store/action/userAction';
+import { uploadToFirebase } from '../store/action/dataAction';
+
+import styles from './styles.module.css';
 
 UpdateUserProfile.propTypes = {
 	display: PropTypes.bool,
@@ -22,7 +23,7 @@ UpdateUserProfile.propTypes = {
 
 function UpdateUserProfile(props) {
 	const dispatch = useDispatch();
-	const dataLoading = useSelector((s) => s.dataLoading);
+	const dataLoading = useSelector((s) => s.user.dataLoading);
 
 	const { profileImage, name, status } = props.userInfo;
 	const [image, setImage] = React.useState(null);

@@ -1,14 +1,22 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 
-import reducer from './reducer';
+import dataReducer from './reducer/dataReducer';
+import userReducer from './reducer/userReducer';
+import postReducer from './reducer/postReducer';
 
 const isDevEnv = window.location.href.includes('localhost');
 
 export const middlewares = [promise, ReduxThunk];
 
 let enhancer;
+
+const rootReducer = combineReducers({
+	data: dataReducer,
+	user: userReducer,
+	post: postReducer
+});
 
 if (isDevEnv) {
 	const composeEnhancer =
@@ -18,4 +26,4 @@ if (isDevEnv) {
 	enhancer = applyMiddleware(...middlewares);
 }
 
-export default createStore(reducer, enhancer);
+export default createStore(rootReducer, enhancer);

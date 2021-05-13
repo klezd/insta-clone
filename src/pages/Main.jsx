@@ -18,10 +18,10 @@ import User from './User';
 import Post from './Post';
 import Error from './Error';
 
+import { getUser, logout } from '../store/action/userAction';
+
 import '../App.css';
 import styles from './styles.module.css';
-
-import { getUser, logout } from '../store/userAction';
 
 export default function Main() {
 	const [displayPopup, setDisplayPopup] = React.useState('');
@@ -34,9 +34,9 @@ export default function Main() {
 		dispatch(getUser());
 	}, []);
 
-	const user = useSelector((s) => s.user);
+	const user = useSelector((s) => s.user.user);
 	const userId = user ? user.uid : '';
-	const alluserInfo = useSelector((s) => s.userInfo);
+	const alluserInfo = useSelector((s) => s.user.userInfo);
 	const userInfo = alluserInfo ? alluserInfo[userId] : {};
 
 	const onLogout = () => {
@@ -53,7 +53,12 @@ export default function Main() {
 	};
 
 	const openUploadPhoto = () => {
-		setDisplayPopup('uploadphoto');
+		if (user !== null) {
+			setDisplayPopup('uploadphoto');
+		} else {
+			localStorage.setItem('errorMsg', 'You must login first!');
+			setDisplayPopup('auth');
+		}
 	};
 
 	const openUserDrawer = () => {

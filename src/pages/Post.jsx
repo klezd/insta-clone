@@ -3,11 +3,12 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPostById } from '../store/dataAction';
+import { getPostById } from '../store/action/postAction';
 
 import { getTimeAgo } from '../utils';
 
 import styles from './styles.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function PostPage() {
 	const params = useParams();
@@ -21,9 +22,9 @@ export default function PostPage() {
 		dispatch(getPostById(postId));
 	}, []);
 
-	const currentPost = useSelector((s) => s.currentPost);
-	const dataLoading = useSelector((s) => s.dataLoading);
-	const user = useSelector((s) => s.user);
+	const currentPost = useSelector((s) => s.post.currentPost);
+	const dataLoading = useSelector((s) => s.post.dataLoading);
+	const user = useSelector((s) => s.user.user);
 
 	if (!currentPost || dataLoading) {
 		return <div className={styles.PageRoot}>Loading...</div>;
@@ -55,6 +56,14 @@ export default function PostPage() {
 			<div className={styles.postContent} onClick={() => openFullImage()}>
 				<div>{post}</div>
 				<img src={image} />
+				<div className={styles.actionPanel}>
+					<div>
+						<FontAwesomeIcon icon={['fas', 'heart']}></FontAwesomeIcon>
+					</div>
+					<div>
+						<FontAwesomeIcon icon={['far', 'comment-alt']}></FontAwesomeIcon>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

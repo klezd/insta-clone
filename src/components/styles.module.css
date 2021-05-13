@@ -45,12 +45,20 @@
   padding: 12px;
 }
 
+.authModal .modalBody {
+  justify-content: center;
+}
+
 .modalBody div {
   margin: 16px 0;
 }
 
 .modalBody div:last-of-type {
   margin-bottom: 8px;
+}
+
+.error {
+  color: red;
 }
 
 .statusInput {

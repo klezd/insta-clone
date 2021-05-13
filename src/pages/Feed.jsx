@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getAllPosts, getPostById } from '../store/dataAction';
+import { getAllPosts, getPostById } from '../store/action/postAction';
 import { getTimeAgo } from '../utils';
 
 import styles from './styles.module.css';
@@ -14,7 +14,8 @@ export default function FeedPage() {
 		dispatch(getAllPosts());
 	}, []);
 
-	const allPosts = useSelector((s) => s.allPosts);
+	const allPosts = useSelector((s) => s.post.allPosts);
+	const postsInOrder = Object.values(allPosts).reverse();
 	const openPost = (id) => {
 		dispatch(getPostById(id));
 		history.push(`/post/${id}`);
@@ -23,7 +24,7 @@ export default function FeedPage() {
 	return (
 		<div className={styles.PageRoot}>
 			<div className={styles.pageContainer}>
-				{Object.values(allPosts).map((p, key) => {
+				{postsInOrder.map((p, key) => {
 					const { id, author, profileImg, image, date } = p;
 					return (
 						<div key={key} onClick={() => openPost(id)}>

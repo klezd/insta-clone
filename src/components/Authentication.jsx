@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from './styles.module.css';
 import Modal from './common/Modal';
 
-import { loginWithGoogleAction } from '../store/userAction';
+import { loginWithGoogleAction } from '../store/action/userAction';
+import styles from './styles.module.css';
 
 Authentication.propTypes = {
 	display: PropTypes.bool,
@@ -41,6 +41,7 @@ export default function Authentication(props) {
 					</div>
 				</div>
 				<div className={styles.modalBody}>
+					<div className={styles.error}>{localStorage.getItem('errorMsg')}</div>
 					<div
 						className={[styles.GGbutton, styles.button].join(' ')}
 						onClick={() => loginWithGoogle()}

@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import TextField from '@material-ui/core/TextField';
 
-import styles from './styles.module.css';
 import Modal from './common/Modal';
 import ImageInput from './common/ImageInput';
 
-import { uploadToFirebase, postToDb } from '../store/dataAction';
+import { uploadToFirebase, postToDb } from '../store/action/postAction';
+
+import styles from './styles.module.css';
 
 UploadPhoto.propTypes = {
 	display: PropTypes.bool,
@@ -24,8 +25,8 @@ export default function UploadPhoto(props) {
 	const [status, setStatus] = React.useState('');
 
 	const dispatch = useDispatch();
-	const loading = useSelector((s) => s.dataLoading);
-	const currentPost = useSelector((s) => s.currentPost);
+	const loading = useSelector((s) => s.post.dataLoading);
+	const currentPost = useSelector((s) => s.post.currentPost);
 
 	const history = useHistory();
 

@@ -1,8 +1,9 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { firebaseAuth } from '../../firebase';
-import { unauthorizeUser } from '../../store/userAction';
+import { unauthorizeUser } from '../../store/action/userAction';
 
 const withAuthorize = (WrappedComponent) => (props) => {
 	const dispatch = useDispatch();

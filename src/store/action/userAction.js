@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
-import { firebaseAuth, firebaseDb } from '../firebase';
-import { prepareUserObjToUploadFirebase } from '../utils';
+import { firebaseAuth, firebaseDb } from '../../firebase';
+import { prepareUserObjToUploadFirebase } from '../../utils';
 
 import {
 	LOGIN,
@@ -9,7 +9,7 @@ import {
 	ADD_USER_INFO,
 	GET_USER_INFO,
 	GET_USER
-} from './types';
+} from '../types';
 
 export const loginAction = (email, password) => async (dispatch) => {
 	dispatch({
@@ -76,6 +76,7 @@ export const loginWithGoogleAction = () => async (dispatch) => {
 							);
 						}
 					});
+					localStorage.clear();
 					dispatch(getUserInfo(user.uid));
 					localStorage.setItem('token', token);
 					localStorage.setItem('user', JSON.stringify(user));
@@ -205,7 +206,10 @@ export const getUserInfo = (id) => (dispatch) => {
 			} else {
 				dispatch({
 					type: `${GET_USER_INFO}_ERROR`,
-					payload: { errorMsg: 'User info not found or is not updated yet.' }
+					payload: {
+						errorCode: 404,
+						errorMsg: 'User info not found or is not updated yet.'
+					}
 				});
 			}
 		})
