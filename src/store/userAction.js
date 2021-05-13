@@ -181,10 +181,14 @@ export const getUserInfo = (id) => (dispatch) => {
 	});
 
 	let userId = id;
-	if (!userId) {
-		const user = firebaseAuth.currentUser;
+	const user = firebaseAuth.currentUser;
+
+	if (!userId && user) {
 		userId = user.uid;
 	}
+
+	if (!userId) return;
+
 	firebaseDb
 		.ref('/users/' + userId)
 		.get()

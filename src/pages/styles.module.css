@@ -8,6 +8,18 @@
   color: var(--primary-text-hover);
 }
 
+.iconBtn img {
+  width: 40px;
+  height: 40px;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+
+}
+
 .bigIconBtn {
   font-size: 36px;
   padding: 32px 48px 36px;

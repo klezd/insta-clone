@@ -31,6 +31,7 @@ export default function Main() {
 	const dispatch = useDispatch();
 
 	const user = useSelector((s) => s.user);
+	const userInfo = useSelector((s) => s.userInfo);
 
 	React.useEffect(() => {
 		dispatch(getUser());
@@ -80,7 +81,11 @@ export default function Main() {
 					{!user && <Button onClick={() => openAuth()}>Login</Button>}
 					{user && (
 						<div className={styles.iconBtn} onClick={() => openUserDrawer()}>
-							<FontAwesomeIcon icon="user"></FontAwesomeIcon>
+							{userInfo ? (
+								<img src={userInfo.profileImage} />
+							) : (
+								<FontAwesomeIcon icon="user"></FontAwesomeIcon>
+							)}
 						</div>
 					)}
 				</div>
