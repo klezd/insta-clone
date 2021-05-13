@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getAllPosts } from '../store/dataAction';
+import { getAllPosts, getPostById } from '../store/dataAction';
 import { getTimeAgo } from '../utils';
 
 import styles from './styles.module.css';
@@ -16,6 +16,7 @@ export default function FeedPage() {
 
 	const allPosts = useSelector((s) => s.allPosts);
 	const openPost = (id) => {
+		dispatch(getPostById(id));
 		history.push(`/post/${id}`);
 	};
 

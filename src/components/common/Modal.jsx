@@ -16,7 +16,7 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
 	display: false,
-	breakpoints: 'sm',
+	breakpoints: 'xs',
 	maxWidth: 'xs'
 };
 

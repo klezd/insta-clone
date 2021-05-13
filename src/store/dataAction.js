@@ -14,36 +14,38 @@ import {
 	GET_ALL_POSTS
 } from './types';
 
-export const uploadToFirebase = (image, post) => (dispatch) => {
-	if (image) {
-		dispatch({
-			type: `${UPLOAD_IMAGE}_PENDING`
-		});
-
-		const storageRef = storage.ref();
-		const imageRef = storageRef.child(image.name);
-		imageRef
-			.put(image)
-			.then(() => {
-				imageRef.getDownloadURL().then((downloadURL) => {
-					dispatch({
-						type: `${UPLOAD_IMAGE}_SUCCESS`,
-						payload: { currentImg: downloadURL }
-					});
-					dispatch(postToDb(downloadURL, post));
-				});
-				dispatch(getImagesFromFirebase);
-			})
-			.catch((error) => {
-				dispatch({
-					type: `${UPLOAD_IMAGE}_ERROR`,
-					payload: { errorCode: error.code, errorMsg: error.message }
-				});
+export function uploadToFirebase({ data, withCallback }) {
+	const { image, post } = data;
+	return (dispatch) => {
+		if (image) {
+			dispatch({
+				type: `${UPLOAD_IMAGE}_PENDING`
 			});
-	} else {
-		alert('Please upload an image first.');
-	}
-};
+
+			const storageRef = storage.ref();
+			const imageRef = storageRef.child(image.name);
+			imageRef
+				.put(image)
+				.then(() => {
+					imageRef.getDownloadURL().then((downloadURL) => {
+						dispatch({
+							type: `${UPLOAD_IMAGE}_SUCCESS`,
+							payload: { currentImg: downloadURL }
+						});
+						dispatch(withCallback(downloadURL, post));
+					});
+				})
+				.catch((error) => {
+					dispatch({
+						type: `${UPLOAD_IMAGE}_ERROR`,
+						payload: { errorCode: error.code, errorMsg: error.message }
+					});
+				});
+		} else {
+			alert('Please upload an image first.');
+		}
+	};
+}
 
 export const getImagesFromFirebase = () => (dispatch) => {
 	//1.
@@ -177,9 +179,11 @@ export const getUserPosts = () => (dispatch) => {
 	const ref = firebaseDb.ref('/user-posts/' + user.uid).orderByChild('date');
 	ref
 		.once('value', (snapshot) => {
+			console.log(snapshot.val());
+			const data = snapshot.val() !== null ? snapshot.val() : {};
 			dispatch({
 				type: `${GET_USER_POSTS}_SUCCESS`,
-				payload: { data: snapshot.val() }
+				payload: { data }
 			});
 		})
 		.catch((error) => {

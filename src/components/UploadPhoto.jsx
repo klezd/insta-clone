@@ -9,8 +9,9 @@ import TextField from '@material-ui/core/TextField';
 
 import styles from './styles.module.css';
 import Modal from './common/Modal';
+import ImageInput from './common/ImageInput';
 
-import { uploadToFirebase } from '../store/dataAction';
+import { uploadToFirebase, postToDb } from '../store/dataAction';
 
 UploadPhoto.propTypes = {
 	display: PropTypes.bool,
@@ -39,6 +40,8 @@ export default function UploadPhoto(props) {
 	}, [currentPost]);
 
 	const onClose = () => {
+		setImageURL('');
+		setImage(null);
 		props.onClose();
 	};
 
@@ -46,27 +49,24 @@ export default function UploadPhoto(props) {
 		setStatus(event.target.value);
 	};
 
-	const onImageChange = (e) => {
-		const reader = new FileReader();
-		let file = e.target.files[0]; // get the supplied file
-		// if there is a file, set image to that file
-		if (file) {
-			reader.onload = () => {
-				if (reader.readyState === 2) {
-					setImage(file);
-				}
-			};
-			reader.readAsDataURL(e.target.files[0]);
-			setImageURL(URL.createObjectURL(e.target.files[0]));
-			// if there is no file, set image back to null
-		} else {
-			setImage(null);
-		}
+	const post = async () => {
+		if (image !== null && imageURL.length > 0)
+			await dispatch(
+				uploadToFirebase({
+					data: { image, post: status },
+					withCallback: postToDb
+				})
+			);
+
+		return;
 	};
 
-	const post = async () => {
-		await dispatch(uploadToFirebase(image, status));
-	};
+	const uploadbtnStyles = [styles.button, styles.uploadButton].join(' ');
+	const disableduploadbtnStyles = [
+		styles.button,
+		styles.uploadButton,
+		styles.disabled
+	].join(' ');
 
 	return (
 		<Modal
@@ -79,20 +79,12 @@ export default function UploadPhoto(props) {
 				<div className={styles.modalNav}>
 					<div></div>
 					<div className={styles.title}>Add Photo</div>
-					<div onClick={() => onClose()}>
+					<div className={styles.closeBtn} onClick={() => onClose()}>
 						<FontAwesomeIcon icon="times"></FontAwesomeIcon>
 					</div>
 				</div>
 				<div className={styles.modalBody}>
-					<div className={styles.photoInput}>
-						<input
-							type="file"
-							accept="image/x-png,image/jpeg"
-							onChange={(e) => {
-								onImageChange(e);
-							}}
-						/>
-					</div>
+					<ImageInput setImage={setImage} setImageURL={setImageURL} />
 					{image && imageURL && (
 						<div className={styles.photoHolder}>
 							<img src={imageURL} />
@@ -110,7 +102,11 @@ export default function UploadPhoto(props) {
 					</div>
 					{!loading && (
 						<div
-							className={[styles.button, styles.uploadButton].join(' ')}
+							className={
+								image !== null && imageURL.length > 0
+									? uploadbtnStyles
+									: disableduploadbtnStyles
+							}
 							onClick={() => post()}
 						>
 							<FontAwesomeIcon icon="file-upload" />

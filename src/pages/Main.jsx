@@ -68,7 +68,7 @@ export default function Main() {
 	};
 
 	return (
-		<div>
+		<React.Fragment>
 			<header className="App-header">
 				<div className="App-navigation">
 					<div className={styles.iconBtn} onClick={() => history.push('/')}>
@@ -88,7 +88,9 @@ export default function Main() {
 			<div className="App-container">
 				<Switch>
 					<Route path="/" exact component={Feed} />
-					<Route path="/user" component={User} />
+					<Route path="/user">
+						<User openUploadPhoto={openUploadPhoto} />
+					</Route>
 					<Route path="/post/:id" component={Post} />
 					<Route component={Error} />
 				</Switch>
@@ -121,6 +123,6 @@ export default function Main() {
 					</ListItem>
 				</List>
 			</Drawer>
-		</div>
+		</React.Fragment>
 	);
 }

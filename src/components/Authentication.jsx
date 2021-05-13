@@ -26,12 +26,19 @@ export default function Authentication(props) {
 	};
 
 	return (
-		<Modal display={props.display} onClose={onClose}>
+		<Modal
+			display={props.display}
+			onClose={onClose}
+			breakpoints="xs"
+			maxWidth="xs"
+		>
 			<div className={styles.authModal}>
 				<div className={styles.modalNav}>
 					<div></div>
 					<div className={styles.title}>LOGIN</div>
-					<div></div>
+					<div className={styles.closeBtn} onClick={() => onClose()}>
+						<FontAwesomeIcon icon="times"></FontAwesomeIcon>
+					</div>
 				</div>
 				<div className={styles.modalBody}>
 					<div

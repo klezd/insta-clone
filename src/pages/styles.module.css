@@ -36,10 +36,26 @@
   grid-template-columns: 150px 1fr ;
 }
 
-.userAvt img {
+.userAvt {
   width: 80%;
   max-width: 120px;
+  overflow: hidden;
+  padding-top: 80%;
+}
+
+.userAvt img {
+  display: block;
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
 
 .userTitle {
@@ -106,6 +122,8 @@
   height: 100%;
   max-width: 100%;
   display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
 .pageContainer>div:hover .authorContainer {
@@ -148,7 +166,7 @@
 }
 
 .navPage img {
-  width: 45px;
+  width: 60px;
   border-radius: 50%;
 }
 
@@ -156,8 +174,14 @@
   display: flex;
   align-items: center;
 }
+.navLeft {
+  padding-left: 12px;
+}
 .navLeft div {
   margin-left: 12px;
+}
+.postContent {
+  height: 500px;
 }
 
 .postContent img {
@@ -165,35 +189,25 @@
   padding: 10px;
   border: 1px solid var(--light-grey);
   max-width: 90%;
+  height: inherit;
 }
 
 .postContent div {
   text-align: justify;
   padding: 24px;
 }
+
+.pageNoContent span {
+  font-weight: 500;
+  color: var(--primary-text);
+}
+
+.pageNoContent span:hover {
+  color: var(--primary-text-hover);
+  cursor: pointer;
+}
 /* End POSTPAGE */
 
-@media screen and (max-width: 600px) {
-  /* Start USERPAGE + FEEDPAGE */
-  .pageHeader.userPage {
-    grid-template-columns: 100px 1fr;
-  }
-  .userTitle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-left: 16px;
-  }
-  .statusBtn {
-    font-size: 3vmin;
-  }
-  .pageContainer > div {
-    width: 100%;
-  }
-
-  /* End USERPAGE + FEEDPAGE */
-
-}
 @media screen and (max-width: 1200px) {
   /* Start USERPAGE + FEEDPAGE */
   .PageRoot {
@@ -205,5 +219,36 @@
   }
 
   /* End USERPAGE + FEEDPAGE */
+}
 
+@media screen and (max-width: 600px) {
+
+  /* Start USERPAGE + FEEDPAGE */
+  .pageHeader.userPage {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .userTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 16px;
+  }
+
+  .statusBtn {
+    font-size: 3vmin;
+  }
+
+  .pageContainer>div {
+    width: 100%;
+  }
+
+  .userAvt img {
+    left: 17px;
+    top: 17px;
+    width: 95px;
+    height: 95px;
+  }
+
+  /* End USERPAGE + FEEDPAGE */
 }

@@ -21,6 +21,8 @@ div {
   --primary: rgb(230, 226, 174);
   --primary-text: rgb(99, 10, 10);
   --primary-text-hover: rgb(160, 22, 22);
+  --primary-disabled: rgba(230, 226, 174, 0.356);
+  --primary-disabled-text: rgb(102, 37, 37);
   --google-bg: rgb(66, 133, 244);
   --grey: rgba(0,0,0,0.6);
   --light-grey: rgba(0,0,0,0.25);

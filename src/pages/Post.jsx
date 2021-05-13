@@ -20,8 +20,13 @@ export default function PostPage() {
 	}, []);
 
 	const currentPost = useSelector((s) => s.currentPost);
+	const dataLoading = useSelector((s) => s.dataLoading);
+
+	if (!currentPost || dataLoading) {
+		return <div className={styles.PageRoot}>Loading...</div>;
+	}
+
 	const { author, profileImg, image, post, date } = currentPost;
-	console.log({ author, profileImg, image, post, date });
 	return (
 		<div className={styles.PageRoot}>
 			<div className={styles.navPage}>

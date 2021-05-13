@@ -1,5 +1,6 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { firebaseAuth, firebaseDb } from '../firebase';
+import { prepareUserObjToUploadFirebase } from '../utils';
 
 import {
 	LOGIN,
@@ -64,7 +65,17 @@ export const loginWithGoogleAction = () => async (dispatch) => {
 							token
 						}
 					});
-					dispatch(addUserInfo(user.displayName, user.email, user.photoURL));
+					firebaseDb.ref('/users/' + user.uid).on('value', (snapshot) => {
+						if (!snapshot.exists) {
+							dispatch(
+								addUserInfo(user.photoURL, {
+									name: user.displayName,
+									email: user.email,
+									status: null
+								})
+							);
+						}
+					});
 					localStorage.setItem('token', token);
 					localStorage.setItem('user', JSON.stringify(user));
 					return { token, user };
@@ -132,35 +143,50 @@ export const getUser = () => (dispatch) => {
 	});
 };
 
-export const addUserInfo = (name, email, url) => async (dispatch) => {
-	dispatch({
-		type: `${ADD_USER_INFO}_PENDING`
-	});
-	const userId = firebaseAuth.currentUser.uid;
-	const data = { name, email, profileImage: url };
-	firebaseDb.ref('/users/' + userId).update(data, (error) => {
-		if (error) {
-			dispatch({
-				type: `${ADD_USER_INFO}_ERROR`,
-				payload: { errorCode: error.code, errorMsg: error.message }
-			});
-		} else {
-			dispatch({
-				type: `${ADD_USER_INFO}_SUCCESS`,
-				payload: data
-			});
-		}
-	});
-};
+/**
+ *
+ * @param {Object} info = {name, email, url, status}
+ * @returns
+ */
+const infoDefault = { name: null, email: null, status: null };
+export function addUserInfo(url = null, info = infoDefault) {
+	console.log('add user info');
+	info['url'] = url;
+	const data = prepareUserObjToUploadFirebase(info);
+	return async (dispatch) => {
+		dispatch({
+			type: `${ADD_USER_INFO}_PENDING`
+		});
+		const userId = firebaseAuth.currentUser.uid;
+		firebaseDb.ref('/users/' + userId).update(data, (error) => {
+			if (error) {
+				dispatch({
+					type: `${ADD_USER_INFO}_ERROR`,
+					payload: { errorCode: error.code, errorMsg: error.message }
+				});
+			} else {
+				dispatch({
+					type: `${ADD_USER_INFO}_SUCCESS`,
+					payload: data
+				});
+				dispatch(getUserInfo());
+			}
+		});
+	};
+}
 
-export const getUserInfo = () => (dispatch) => {
+export const getUserInfo = (id) => (dispatch) => {
 	dispatch({
 		type: `${GET_USER_INFO}_PENDING`
 	});
 
-	const user = firebaseAuth.currentUser;
+	let userId = id;
+	if (!userId) {
+		const user = firebaseAuth.currentUser;
+		userId = user.uid;
+	}
 	firebaseDb
-		.ref('/users/' + user.uid)
+		.ref('/users/' + userId)
 		.get()
 		.then((snapshot) => {
 			if (snapshot.exists()) {

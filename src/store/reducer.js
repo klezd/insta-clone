@@ -22,8 +22,8 @@ const initialState = {
 	imagesOfUser: [],
 	currentImg: '',
 	currentPost: null,
-	allUserPosts: [],
-	allPosts: [],
+	allUserPosts: {},
+	allPosts: {},
 	error: null,
 	errorCode: null,
 	errorMsg: null
