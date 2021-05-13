@@ -119,7 +119,10 @@ function reducer(state = initialState, action) {
 		case `${GET_USER_INFO}_SUCCESS`:
 			return {
 				...state,
-				userInfo: payload.data,
+				userInfo: {
+					...state.userInfo,
+					[payload.userId]: payload.data
+				},
 				dataLoading: false
 			};
 		case `${GET_ALL_POSTS}_SUCCESS`:

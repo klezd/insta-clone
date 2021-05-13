@@ -141,6 +141,7 @@ export const getUser = () => (dispatch) => {
 		type: GET_USER,
 		payload: { user }
 	});
+	dispatch(getUserInfo());
 };
 
 /**
@@ -177,7 +178,8 @@ export function addUserInfo(url = null, info = infoDefault) {
 
 export const getUserInfo = (id) => (dispatch) => {
 	dispatch({
-		type: `${GET_USER_INFO}_PENDING`
+		type: `${GET_USER_INFO}_PENDING`,
+		payload: { id }
 	});
 
 	let userId = id;
@@ -197,7 +199,7 @@ export const getUserInfo = (id) => (dispatch) => {
 				const data = snapshot.val();
 				dispatch({
 					type: `${GET_USER_INFO}_SUCCESS`,
-					payload: { data }
+					payload: { data, userId }
 				});
 			} else {
 				dispatch({

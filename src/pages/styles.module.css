@@ -189,6 +189,9 @@
 .navLeft {
   padding-left: 12px;
 }
+.navLeft:hover {
+  cursor: pointer;
+}
 .navLeft div {
   margin-left: 12px;
 }

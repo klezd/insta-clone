@@ -168,15 +168,14 @@ export const getPostById = (id) => (dispatch) => {
 		});
 };
 
-export const getUserPosts = () => (dispatch) => {
-	const user = firebaseAuth.currentUser;
-	if (!user) return;
+export const getUserPosts = (userId) => (dispatch) => {
+	if (!userId) return;
 
 	dispatch({
 		type: `${GET_USER_POSTS}_PENDING`
 	});
 
-	const ref = firebaseDb.ref('/user-posts/' + user.uid).orderByChild('date');
+	const ref = firebaseDb.ref('/user-posts/' + userId).orderByChild('date');
 	ref
 		.once('value', (snapshot) => {
 			console.log(snapshot.val());

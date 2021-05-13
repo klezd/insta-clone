@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getPostById } from '../store/dataAction';
@@ -12,6 +12,8 @@ import styles from './styles.module.css';
 export default function PostPage() {
 	const params = useParams();
 	const postId = params.id;
+
+	const history = useHistory();
 
 	const dispatch = useDispatch();
 
@@ -26,11 +28,14 @@ export default function PostPage() {
 		return <div className={styles.PageRoot}>Loading...</div>;
 	}
 
-	const { author, profileImg, image, post, date } = currentPost;
+	const openUserPage = (id) => {
+		history.push('/user/' + id);
+	};
+	const { userId, author, profileImg, image, post, date } = currentPost;
 	return (
 		<div className={styles.PageRoot}>
 			<div className={styles.navPage}>
-				<div className={styles.navLeft}>
+				<div className={styles.navLeft} onClick={() => openUserPage(userId)}>
 					<img src={profileImg} />
 					<div>{author}</div>
 				</div>

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import withAuthorize from '../components/HOC/withAuthorize';
 import { getPostById, getUserPosts } from '../store/dataAction';
 import { getTimeAgo } from '../utils';
 import styles from './styles.module.css';
 import UpdateUserProfile from '../components/UpdateUserProfile';
+
+import { firebaseAuth } from '../firebase';
+import { getUserInfo } from '../store/userAction';
 
 UserPage.propTypes = {
 	openUploadPhoto: PropTypes.func
@@ -18,6 +20,18 @@ UserPage.propTypes = {
 function UserPage(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const params = useParams();
+	const userId = params.id;
+
+	const currentUser = firebaseAuth.currentUser;
+
+	// This value is to check if this is the page of current user profile
+	const isUser = currentUser
+		? currentUser.uid === userId
+			? true
+			: false
+		: false;
+
 	const [displayPopup, setDisplayPopup] = React.useState('');
 
 	const openProfilePopup = () => {
@@ -29,15 +43,24 @@ function UserPage(props) {
 	};
 
 	React.useEffect(() => {
-		dispatch(getUserPosts());
+		dispatch(getUserInfo(userId));
+		dispatch(getUserPosts(userId));
 	}, []);
 
 	const userPosts = useSelector((s) => s.allUserPosts);
 	const userInfo = useSelector((s) => s.userInfo);
+	const dataLoading = useSelector((s) => s.dataLoading);
+	const pageUserInfo = userInfo ? userInfo[userId] : null;
 
-	console.log(userInfo);
+	if (!pageUserInfo || dataLoading) {
+		return (
+			<div className={[styles.PageRoot, styles.userPage].join(' ')}>
+				Loading...
+			</div>
+		);
+	}
 
-	const { name, status, profileImage } = userInfo;
+	const { name, status, profileImage } = pageUserInfo;
 
 	const modifiedStatus = status
 		? status.length > 50
@@ -76,20 +99,28 @@ function UserPage(props) {
 								</Tooltip>
 							)}
 						</div>
-						<div
-							className={styles.statusBtn}
-							onClick={() => openProfilePopup()}
-						>
-							Update my profile
-						</div>
+						{isUser && (
+							<div
+								className={styles.statusBtn}
+								onClick={() => openProfilePopup()}
+							>
+								Update my profile
+							</div>
+						)}
 					</div>
 				</div>
 				{Object.keys(userPosts).length === 0 ? (
 					<div className={styles.pageNoContent}>
-						You have not posted anything yet!
-						<br />
-						Start posting from{' '}
-						<span onClick={() => props.openUploadPhoto()}>here</span> !
+						{isUser ? (
+							<>
+								You have not posted anything yet!
+								<br />
+								Start posting from{' '}
+								<span onClick={() => props.openUploadPhoto()}>here</span> !
+							</>
+						) : (
+							<>This user have not posted anything yet!</>
+						)}
 					</div>
 				) : (
 					<div className={styles.pageContainer}>
@@ -109,13 +140,15 @@ function UserPage(props) {
 					</div>
 				)}
 			</div>
-			<UpdateUserProfile
-				display={displayPopup === 'profile'}
-				onClose={closeModal}
-				userInfo={userInfo}
-			/>
+			{isUser && (
+				<UpdateUserProfile
+					display={displayPopup === 'profile'}
+					onClose={closeModal}
+					userInfo={pageUserInfo}
+				/>
+			)}
 		</React.Fragment>
 	);
 }
 
-export default withAuthorize(UserPage);
+export default UserPage;

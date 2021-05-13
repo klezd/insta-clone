@@ -21,7 +21,7 @@ import Error from './Error';
 import '../App.css';
 import styles from './styles.module.css';
 
-import { getUser, getUserInfo, logout } from '../store/userAction';
+import { getUser, logout } from '../store/userAction';
 
 export default function Main() {
 	const [displayPopup, setDisplayPopup] = React.useState('');
@@ -30,13 +30,14 @@ export default function Main() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const user = useSelector((s) => s.user);
-	const userInfo = useSelector((s) => s.userInfo);
-
 	React.useEffect(() => {
 		dispatch(getUser());
-		user && dispatch(getUserInfo());
-	}, [user]);
+	}, []);
+
+	const user = useSelector((s) => s.user);
+	const userId = user ? user.uid : '';
+	const alluserInfo = useSelector((s) => s.userInfo);
+	const userInfo = alluserInfo ? alluserInfo[userId] : {};
 
 	const onLogout = () => {
 		dispatch(logout());
@@ -60,7 +61,7 @@ export default function Main() {
 	};
 
 	const openUserPage = () => {
-		history.push('/user');
+		history.push('/user/' + user.uid);
 		closeDrawer();
 	};
 
@@ -93,7 +94,7 @@ export default function Main() {
 			<div className="App-container">
 				<Switch>
 					<Route path="/" exact component={Feed} />
-					<Route path="/user">
+					<Route path="/user/:id">
 						<User openUploadPhoto={openUploadPhoto} />
 					</Route>
 					<Route path="/post/:id" component={Post} />

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import styles from './styles.module.css';
 import Modal from './common/Modal';
@@ -12,7 +13,6 @@ import ImageInput from './common/ImageInput';
 import { addUserInfo, getUserInfo } from '../store/userAction';
 import { uploadToFirebase } from '../store/dataAction';
 import withAuthorize from './HOC/withAuthorize';
-import { TextField } from '@material-ui/core';
 
 UpdateUserProfile.propTypes = {
 	display: PropTypes.bool,
