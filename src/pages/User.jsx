@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 
 import { getPostById, getUserPosts } from '../store/dataAction';
 import { getTimeAgo } from '../utils';
 import styles from './styles.module.css';
 import UpdateUserProfile from '../components/UpdateUserProfile';
 
-import { firebaseAuth } from '../firebase';
 import { getUserInfo } from '../store/userAction';
 
 UserPage.propTypes = {
@@ -21,16 +20,19 @@ function UserPage(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const params = useParams();
-	const userId = params.id;
+	const location = useLocation();
 
-	const currentUser = firebaseAuth.currentUser;
+	let userId = null;
+	let isUser = location.pathname === '/my-profile' ? true : false;
+
+	const user = useSelector((s) => s.user);
+	if (!isUser) {
+		userId = params.id;
+	} else {
+		userId = user.uid;
+	}
 
 	// This value is to check if this is the page of current user profile
-	const isUser = currentUser
-		? currentUser.uid === userId
-			? true
-			: false
-		: false;
 
 	const [displayPopup, setDisplayPopup] = React.useState('');
 

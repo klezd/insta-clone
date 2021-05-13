@@ -66,7 +66,7 @@ export const loginWithGoogleAction = () => async (dispatch) => {
 						}
 					});
 					firebaseDb.ref('/users/' + user.uid).on('value', (snapshot) => {
-						if (!snapshot.exists) {
+						if (!snapshot.exists()) {
 							dispatch(
 								addUserInfo(user.photoURL, {
 									name: user.displayName,
@@ -76,6 +76,7 @@ export const loginWithGoogleAction = () => async (dispatch) => {
 							);
 						}
 					});
+					dispatch(getUserInfo(user.uid));
 					localStorage.setItem('token', token);
 					localStorage.setItem('user', JSON.stringify(user));
 					return { token, user };
@@ -151,7 +152,6 @@ export const getUser = () => (dispatch) => {
  */
 const infoDefault = { name: null, email: null, status: null };
 export function addUserInfo(url = null, info = infoDefault) {
-	console.log('add user info');
 	info['url'] = url;
 	const data = prepareUserObjToUploadFirebase(info);
 	return async (dispatch) => {
@@ -170,8 +170,8 @@ export function addUserInfo(url = null, info = infoDefault) {
 					type: `${ADD_USER_INFO}_SUCCESS`,
 					payload: data
 				});
-				dispatch(getUserInfo());
 			}
+			dispatch(getUserInfo());
 		});
 	};
 }
@@ -183,6 +183,7 @@ export const getUserInfo = (id) => (dispatch) => {
 	});
 
 	let userId = id;
+
 	const user = firebaseAuth.currentUser;
 
 	if (!userId && user) {

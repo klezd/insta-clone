@@ -23,15 +23,24 @@ export default function PostPage() {
 
 	const currentPost = useSelector((s) => s.currentPost);
 	const dataLoading = useSelector((s) => s.dataLoading);
+	const user = useSelector((s) => s.user);
 
 	if (!currentPost || dataLoading) {
 		return <div className={styles.PageRoot}>Loading...</div>;
 	}
 
-	const openUserPage = (id) => {
-		history.push('/user/' + id);
+	const openUserPage = (uid) => {
+		if (user && user.uid === uid) {
+			history.push('/my-profile');
+		} else history.push('/user/' + uid);
 	};
+
 	const { userId, author, profileImg, image, post, date } = currentPost;
+
+	const openFullImage = () => {
+		window.open(image, '_blank');
+	};
+
 	return (
 		<div className={styles.PageRoot}>
 			<div className={styles.navPage}>
@@ -43,7 +52,7 @@ export default function PostPage() {
 					<div>{date && getTimeAgo(date)}</div>
 				</div>
 			</div>
-			<div className={styles.postContent}>
+			<div className={styles.postContent} onClick={() => openFullImage()}>
 				<div>{post}</div>
 				<img src={image} />
 			</div>

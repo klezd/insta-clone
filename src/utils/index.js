@@ -22,9 +22,6 @@ export function getTimeAgo(date) {
 	}
 }
 
-// var aDay = 24 * 60 * 60 * 1000;
-// console.log(timeSince(new Date(Date.now() - aDay)));
-
 export const prepareUserObjToUploadFirebase = (object) => {
 	let newObj = {};
 	if (object.email) {

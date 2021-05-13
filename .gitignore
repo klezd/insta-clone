@@ -11,6 +11,9 @@
 # production
 /build
 
+#host
+/.firebase
+
 # misc
 .DS_Store
 .env.local
@@ -24,3 +27,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .firebaserc
+*/**.cache

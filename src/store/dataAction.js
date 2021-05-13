@@ -178,7 +178,6 @@ export const getUserPosts = (userId) => (dispatch) => {
 	const ref = firebaseDb.ref('/user-posts/' + userId).orderByChild('date');
 	ref
 		.once('value', (snapshot) => {
-			console.log(snapshot.val());
 			const data = snapshot.val() !== null ? snapshot.val() : {};
 			dispatch({
 				type: `${GET_USER_POSTS}_SUCCESS`,

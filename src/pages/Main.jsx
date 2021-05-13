@@ -61,8 +61,8 @@ export default function Main() {
 	};
 
 	const openUserPage = () => {
-		history.push('/user/' + user.uid);
 		closeDrawer();
+		history.push('/my-profile');
 	};
 
 	const closeDrawer = () => {
@@ -94,7 +94,8 @@ export default function Main() {
 			<div className="App-container">
 				<Switch>
 					<Route path="/" exact component={Feed} />
-					<Route path="/user/:id">
+					<Route path="/user/:id" component={User} />
+					<Route path="/my-profile">
 						<User openUploadPhoto={openUploadPhoto} />
 					</Route>
 					<Route path="/post/:id" component={Post} />

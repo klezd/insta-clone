@@ -205,6 +205,7 @@
   border: 1px solid var(--light-grey);
   max-width: 90%;
   height: inherit;
+  object-fit: cover;
 }
 
 .postContent div {
@@ -223,6 +224,14 @@
 }
 /* End POSTPAGE */
 
+@media screen and (min-width: 1201px) {
+  .userAvt {
+    padding: 0 !important;
+  }
+  .userAvt img {
+    position: inherit;
+  }
+}
 @media screen and (max-width: 1200px) {
   /* Start USERPAGE + FEEDPAGE */
   .PageRoot {
