@@ -25,12 +25,14 @@ function UserPage(props) {
 	const location = useLocation();
 
 	let userId = null;
-	let isUser = location.pathname === '/my-profile' ? true : false;
 
 	const user = useSelector((s) => s.user.user);
+
+	let isUser = location.pathname === '/my-profile' || user ? true : false;
+
 	if (!isUser) {
 		userId = params.id;
-	} else {
+	} else if (user) {
 		userId = user.uid;
 	}
 

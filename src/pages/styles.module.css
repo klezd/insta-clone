@@ -226,13 +226,15 @@
 
 .actionPanel {
   display: flex;
-  justify-content: flex-start;
   padding: 16px 4px !important;
+  justify-content: space-between;
 }
 .actionPanel div {
+  display: flex;
   margin: 0 12px;
   font-size: 18px;
 }
+.actionPanel .actionBtn:hover {cursor: pointer;}
 
 /* End POSTPAGE */
 
@@ -288,12 +290,14 @@
 
   /* End USERPAGE + FEEDPAGE */
   /* Start POSTPAGE */
-  .actionPanel {
-    justify-content: space-between;
-  }
 
   .actionPanel div {
+    justify-content: space-between;
     font-size: 18px;
+  }
+
+  .actionPanel div.stretch {
+    width: 100%;
   }
 
   /* End POSTPAGE */

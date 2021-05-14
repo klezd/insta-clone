@@ -10,7 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Modal from './common/Modal';
 import ImageInput from './common/ImageInput';
 
-import { uploadToFirebase, postToDb } from '../store/action/postAction';
+import { postToDb } from '../store/action/postAction';
+import { uploadToFirebase } from '../store/action/dataAction';
 
 import styles from './styles.module.css';
 

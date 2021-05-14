@@ -15,7 +15,8 @@ import {
 	faTimes,
 	faSignOutAlt,
 	faHeart,
-	faCommentAlt
+	faCommentAlt,
+	faTrash
 } from '@fortawesome/free-solid-svg-icons';
 
 import './App.css';
@@ -32,7 +33,8 @@ library.add(
 	faTimes,
 	faSignOutAlt,
 	faHeart,
-	faCommentAlt
+	faCommentAlt,
+	faTrash
 );
 
 function App() {

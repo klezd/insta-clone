@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPostById } from '../store/action/postAction';
+import { deletePostById, getPostById } from '../store/action/postAction';
 
 import { getTimeAgo } from '../utils';
 
@@ -30,16 +30,21 @@ export default function PostPage() {
 		return <div className={styles.PageRoot}>Loading...</div>;
 	}
 
+	const { userId, author, id, profileImg, image, post, date } = currentPost;
+	const isUser = user && user.uid === userId ? true : false;
+
 	const openUserPage = (uid) => {
-		if (user && user.uid === uid) {
+		if (isUser) {
 			history.push('/my-profile');
 		} else history.push('/user/' + uid);
 	};
 
-	const { userId, author, profileImg, image, post, date } = currentPost;
-
 	const openFullImage = () => {
 		window.open(image, '_blank');
+	};
+
+	const onDeletePost = () => {
+		dispatch(deletePostById(id));
 	};
 
 	return (
@@ -53,16 +58,23 @@ export default function PostPage() {
 					<div>{date && getTimeAgo(date)}</div>
 				</div>
 			</div>
-			<div className={styles.postContent} onClick={() => openFullImage()}>
+			<div className={styles.postContent}>
 				<div>{post}</div>
-				<img src={image} />
+				<img src={image} onClick={() => openFullImage()} />
 				<div className={styles.actionPanel}>
-					<div>
-						<FontAwesomeIcon icon={['fas', 'heart']}></FontAwesomeIcon>
+					<div className={isUser ? '' : styles.stretch}>
+						<div className={styles.actionBtn}>
+							<FontAwesomeIcon icon={['fas', 'heart']} />
+						</div>
+						<div className={styles.actionBtn}>
+							<FontAwesomeIcon icon={['far', 'comment-alt']} />
+						</div>
 					</div>
-					<div>
-						<FontAwesomeIcon icon={['far', 'comment-alt']}></FontAwesomeIcon>
-					</div>
+					{isUser && (
+						<div className={styles.actionBtn} onClick={() => onDeletePost()}>
+							<FontAwesomeIcon icon={['fas', 'trash']} />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

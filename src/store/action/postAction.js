@@ -1,6 +1,12 @@
 import { firebaseAuth, firebaseDb } from '../../firebase';
 
-import { UPLOAD_POST, GET_USER_POSTS, GET_POST, GET_ALL_POSTS } from '../types';
+import {
+	UPLOAD_POST,
+	GET_USER_POSTS,
+	GET_POST,
+	GET_ALL_POSTS,
+	DELETE_POST
+} from '../types';
 
 export const postToDb = (imageURL, post) => (dispatch) => {
 	const user = firebaseAuth.currentUser;
@@ -122,4 +128,23 @@ export const getAllPosts = () => (dispatch) => {
 				payload: { errorCode: error.code, errorMsg: error.message }
 			});
 		});
+};
+
+export const deletePostById = (id) => (dispatch) => {
+	dispatch({
+		type: `${DELETE_POST}_PENDING`
+	});
+	firebaseDb.ref('/posts/' + id).remove((error) => {
+		if (error) {
+			dispatch({
+				type: `${DELETE_POST}_ERROR`,
+				payload: { errorCode: error.code, errorMsg: error.message }
+			});
+		} else {
+			dispatch({
+				type: `${DELETE_POST}_SUCCESS`
+			});
+			window.location.href = '/my-profile';
+		}
+	});
 };

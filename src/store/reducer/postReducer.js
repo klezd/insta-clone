@@ -1,4 +1,10 @@
-import { UPLOAD_POST, GET_USER_POSTS, GET_POST, GET_ALL_POSTS } from '../types';
+import {
+	UPLOAD_POST,
+	GET_USER_POSTS,
+	GET_POST,
+	GET_ALL_POSTS,
+	DELETE_POST
+} from '../types';
 
 const initialState = {
 	dataLoading: false,
@@ -18,20 +24,27 @@ function postReducer(state = initialState, action) {
 		case `${GET_USER_POSTS}_PENDING`:
 		case `${GET_POST}_PENDING`:
 		case `${GET_ALL_POSTS}_PENDING`:
+		case `${DELETE_POST}_PENDING`:
 			return {
 				...state,
 				dataLoading: true
 			};
-
 		case `${GET_USER_POSTS}_ERROR`:
 		case `${GET_ALL_POSTS}_ERROR`:
 		case `${UPLOAD_POST}_ERROR`:
 		case `${GET_POST}_ERROR`:
+		case `${DELETE_POST}_ERROR`:
 			return {
 				...state,
 				dataLoading: false,
 				errorCode: payload.errorCode,
 				errorMsg: payload.errorMsg
+			};
+
+		case `${DELETE_POST}_SUCCESS`:
+			return {
+				...state,
+				dataLoading: false
 			};
 
 		case `${GET_ALL_POSTS}_SUCCESS`:
