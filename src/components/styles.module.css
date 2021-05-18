@@ -57,10 +57,6 @@
   margin-bottom: 8px;
 }
 
-.error {
-  color: red;
-}
-
 .statusInput {
   width: 90%;
 }
@@ -95,12 +91,42 @@
 
 }
 
+.loginbutton {
+  width: 250px;
+  padding: 12px;
+  border-radius: 3px;
+  margin: 12px 0 0 !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+  rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+  rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
 .GGbutton {
   background-color: var(--google-bg);
   color: #fff;
-  padding: 12px;
-  border-radius: 3px;
-  box-shadow: 2px 2px 2px #000;
+}
+
+.GGbutton:hover {
+  background-color: var(--google-hover);
+}
+
+.FBbutton {
+  background-color: var(--fb-bg);
+  background-image: var(--fb-gradient);
+  color: #fff;
+}
+
+.FBbutton:hover {
+  background-color: var(--fb-hover);
+}
+
+.loginbutton:hover {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+  rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.loginbutton svg {
+  padding-right: 12px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .uploadButton {
@@ -125,4 +151,9 @@
 .button span {
   margin-left: 16px;
   margin-right: 24px;
+}
+
+.errorText {
+  color: var(--google-bg);
+  font-weight: 500;
 }

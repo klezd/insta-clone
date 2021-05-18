@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Modal from './common/Modal';
 
-import { loginWithGoogleAction } from '../store/action/userAction';
+import {
+	loginWithGoogleAction,
+	loginWithFacebookAction
+} from '../store/action/userAction';
 import styles from './styles.module.css';
 
 Authentication.propTypes = {
@@ -15,6 +18,7 @@ Authentication.propTypes = {
 
 export default function Authentication(props) {
 	const dispatch = useDispatch();
+	const errorMsg = useSelector((s) => s.user.errorMsg);
 
 	const onClose = () => {
 		props.onClose();
@@ -22,6 +26,11 @@ export default function Authentication(props) {
 
 	const loginWithGoogle = async () => {
 		dispatch(loginWithGoogleAction());
+		onClose();
+	};
+
+	const loginWithFacebook = async () => {
+		dispatch(loginWithFacebookAction());
 		onClose();
 	};
 
@@ -41,14 +50,36 @@ export default function Authentication(props) {
 					</div>
 				</div>
 				<div className={styles.modalBody}>
-					<div className={styles.error}>{localStorage.getItem('errorMsg')}</div>
 					<div
-						className={[styles.GGbutton, styles.button].join(' ')}
+						className={[
+							styles.GGbutton,
+							styles.loginbutton,
+							styles.button
+						].join(' ')}
 						onClick={() => loginWithGoogle()}
 					>
 						<FontAwesomeIcon icon={['fab', 'google']} />
 						<span>Login With Google</span>
 					</div>
+
+					<div
+						className={[
+							styles.FBbutton,
+							styles.loginbutton,
+							styles.button
+						].join(' ')}
+						onClick={() => loginWithFacebook()}
+					>
+						<FontAwesomeIcon icon={['fab', 'facebook-f']} />
+						<span>Login With Facebook</span>
+					</div>
+
+					{errorMsg && <div className={styles.errorText}>{errorMsg}</div>}
+					{localStorage.getItem('errorMsg') && (
+						<div className={styles.errorText}>
+							{localStorage.getItem('errorMsg')}
+						</div>
+					)}
 				</div>
 			</div>
 		</Modal>

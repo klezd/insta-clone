@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Main from './pages/Main';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { fab, faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import {
 	fas,
@@ -26,6 +26,7 @@ library.add(
 	fas,
 	far,
 	faGoogle,
+	faFacebookF,
 	faHome,
 	faUser,
 	faPlus,

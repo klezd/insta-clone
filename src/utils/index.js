@@ -36,5 +36,6 @@ export const prepareUserObjToUploadFirebase = (object) => {
 	if (object.status) {
 		newObj['status'] = object.status;
 	}
+
 	return newObj;
 };

@@ -5,6 +5,7 @@ import { prepareUserObjToUploadFirebase } from '../../utils';
 import {
 	LOGIN,
 	LOGIN_WITH_GOOGLE,
+	LOGIN_WITH_FACEBOOK,
 	LOGOUT,
 	ADD_USER_INFO,
 	GET_USER_INFO,
@@ -41,32 +42,43 @@ export const loginAction = (email, password) => async (dispatch) => {
 };
 
 export const loginWithGoogleAction = () => async (dispatch) => {
-	dispatch({
-		type: `${LOGIN_WITH_GOOGLE}_PENDING`
-	});
-
 	const provider = new firebase.auth.GoogleAuthProvider();
-	return await firebase
-		.auth()
-		.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-		.then(() => {
-			return firebaseAuth
-				.signInWithPopup(provider)
-				.then((result) => {
-					// This gives you a Google Access Token. You can use it to access the Google API.
-					const credential = result.credential;
-					const token = credential.accessToken;
-					// The signed-in user info.
-					const user = result.user;
-					dispatch({
-						type: `${LOGIN_WITH_GOOGLE}_SUCCESS`,
-						payload: {
-							user,
-							token
-						}
-					});
-					firebaseDb.ref('/users/' + user.uid).on('value', (snapshot) => {
-						if (!snapshot.exists()) {
+	dispatch(loginWithExternalService(LOGIN_WITH_GOOGLE, provider));
+};
+
+export const loginWithFacebookAction = () => async (dispatch) => {
+	const provider = new firebase.auth.FacebookAuthProvider();
+	dispatch(loginWithExternalService(LOGIN_WITH_FACEBOOK, provider));
+};
+
+export const loginWithExternalService = (type, provider) => {
+	return async (dispatch) => {
+		dispatch({
+			type: `${type}_PENDING`
+		});
+
+		return await firebase
+			.auth()
+			.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+			.then(() => {
+				return firebaseAuth
+					.signInWithPopup(provider)
+					.then((result) => {
+						console.log(result);
+						// // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+						const credential = result.credential;
+						const token = credential.accessToken;
+						// The signed-in user info.
+						const user = result.user;
+						dispatch({
+							type: `${type}_SUCCESS`,
+							payload: {
+								user,
+								token
+							}
+						});
+						const userInfo = result.additionalUserInfo;
+						if (userInfo.isNewUser) {
 							dispatch(
 								addUserInfo(user.photoURL, {
 									name: user.displayName,
@@ -74,41 +86,42 @@ export const loginWithGoogleAction = () => async (dispatch) => {
 									status: null
 								})
 							);
+						} else {
+							dispatch(getUserInfo(user.uid));
 						}
-					});
-					localStorage.clear();
-					dispatch(getUserInfo(user.uid));
-					localStorage.setItem('token', token);
-					localStorage.setItem('user', JSON.stringify(user));
-					return { token, user };
-				})
-				.catch((error) => {
-					// Handle Errors here.
-					const errorCode = error.code;
-					const errorMessage = error.message;
-					// The email of the user's account used.
-					const email = error.email;
-					// The AuthCredential type that was used.
-					const credential = error.credential;
-					dispatch({
-						type: `${LOGIN_WITH_GOOGLE}_ERROR`,
-						payload: { email, errorCode, errorMsg: errorMessage }
-					});
-					return { email, errorCode, errorMsg: errorMessage, credential };
-				});
-		})
-		.catch((error) => {
-			// Handle Errors here.
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			dispatch({
-				type: `${LOGIN_WITH_GOOGLE}_ERROR`,
-				payload: { errorCode, errorMsg: errorMessage }
-			});
-			return { errorCode, errorMsg: errorMessage };
-		});
-};
 
+						localStorage.clear();
+						localStorage.setItem('token', token);
+						localStorage.setItem('user', JSON.stringify(user));
+						return { token, user };
+					})
+					.catch((error) => {
+						// Handle Errors here.
+						const errorCode = error.code;
+						const errorMessage = error.message;
+						// The email of the user's account used.
+						const email = error.email;
+						// The AuthCredential type that was used.
+						const credential = error.credential;
+						dispatch({
+							type: `${type}_ERROR`,
+							payload: { email, errorCode, errorMsg: errorMessage }
+						});
+						return { email, errorCode, errorMsg: errorMessage, credential };
+					});
+			})
+			.catch((error) => {
+				// Handle Errors here.
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				dispatch({
+					type: `${LOGIN_WITH_GOOGLE}_ERROR`,
+					payload: { errorCode, errorMsg: errorMessage }
+				});
+				return { errorCode, errorMsg: errorMessage };
+			});
+	};
+};
 export const logout = () => (dispatch) => {
 	dispatch({
 		type: `${LOGOUT}_PENDING`
