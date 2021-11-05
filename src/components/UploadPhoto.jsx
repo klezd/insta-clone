@@ -28,6 +28,7 @@ export default function UploadPhoto(props) {
 	const dispatch = useDispatch();
 	const loading = useSelector((s) => s.post.dataLoading);
 	const currentPost = useSelector((s) => s.post.currentPost);
+	const errorMsg = useSelector((s) => s.post.errorMsg);
 
 	const history = useHistory();
 
@@ -86,12 +87,12 @@ export default function UploadPhoto(props) {
 					</div>
 				</div>
 				<div className={styles.modalBody}>
-					<ImageInput setImage={setImage} setImageURL={setImageURL} />
 					{image && imageURL && (
 						<div className={styles.photoHolder}>
 							<img src={imageURL} />
 						</div>
 					)}
+					<ImageInput setImage={setImage} setImageURL={setImageURL} />
 					<div className={styles.statusInput}>
 						<TextField
 							multiline
@@ -102,20 +103,29 @@ export default function UploadPhoto(props) {
 							placeholder="Status..."
 						/>
 					</div>
-					{!loading && (
-						<div
-							className={
-								image !== null && imageURL.length > 0
-									? uploadbtnStyles
-									: disableduploadbtnStyles
-							}
-							onClick={() => post()}
-						>
-							<FontAwesomeIcon icon="file-upload" />
-							<span>Post</span>
+
+					{errorMsg && (
+						<div className={styles.errorText}>
+							{errorMsg} <br /> Please try again later!
 						</div>
 					)}
-					{loading && <div> Posting... </div>}
+
+					<div
+						className={
+							image !== null && imageURL.length > 0
+								? uploadbtnStyles
+								: disableduploadbtnStyles
+						}
+						onClick={() => post()}
+						disabled={loading}
+					>
+						{!loading ? (
+							<FontAwesomeIcon icon="file-upload" />
+						) : (
+							<FontAwesomeIcon icon="spinner" />
+						)}
+						{!loading ? <span>Post</span> : <span>Posting...</span>}
+					</div>
 				</div>
 			</div>
 		</Modal>

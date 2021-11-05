@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { firebaseAuth, firebaseDb } from '../../firebase';
 
 import {
@@ -5,8 +6,13 @@ import {
 	GET_USER_POSTS,
 	GET_POST,
 	GET_ALL_POSTS,
-	DELETE_POST
+	DELETE_POST,
+	RELOAD,
+	LIKE_POST
 } from '../types';
+import { deleteFromFirebase } from './dataAction';
+
+export const reload = () => ({ type: RELOAD });
 
 export const postToDb = (imageURL, post) => (dispatch) => {
 	const user = firebaseAuth.currentUser;
@@ -32,7 +38,7 @@ export const postToDb = (imageURL, post) => (dispatch) => {
 		updates['/posts/' + newPostKey] = data;
 		updates['/user-posts/' + user.uid + '/' + newPostKey] = data;
 
-		return firebaseDb.ref().update(updates, (error) => {
+		return firebaseDb.ref().set(updates, (error) => {
 			if (error) {
 				dispatch({
 					type: `${UPLOAD_POST}_ERROR`,
@@ -46,6 +52,8 @@ export const postToDb = (imageURL, post) => (dispatch) => {
 			}
 		});
 	} else {
+		// Delete upload from storage if failed
+		dispatch(deleteFromFirebase(imageURL));
 		dispatch({
 			type: `${UPLOAD_POST}_ERROR`,
 			payload: { errorMsg: 'Permission denied' }
@@ -145,6 +153,38 @@ export const deletePostById = (id) => (dispatch) => {
 				type: `${DELETE_POST}_SUCCESS`
 			});
 			window.location.href = '/my-profile';
+		}
+	});
+};
+
+export const likePost = (postId, authorId, isLike) => (dispatch) => {
+	dispatch({
+		type: `${LIKE_POST}_PENDING`
+	});
+	const currentUserId = firebaseAuth.currentUser.uid;
+	const updates = {};
+	const likeCount = isLike
+		? firebase.database.ServerValue.increment(1)
+		: firebase.database.ServerValue.decrement(1);
+	updates[`/posts/${postId}/likes/${currentUserId}`] = isLike ? true : false;
+	updates[`/posts/${postId}/likeCount`] = likeCount;
+	updates[`/user-posts/${authorId}/${postId}/likes/${currentUserId}`] = isLike
+		? true
+		: false;
+	updates[`/user-posts/${authorId}/${postId}/likeCount`] = likeCount;
+
+	firebaseDb.ref().update(updates, (error) => {
+		if (!error) {
+			//Like success
+			dispatch({
+				type: `${LIKE_POST}_SUCCESS`,
+				payload: { isLike, postId }
+			});
+		} else {
+			dispatch({
+				type: `${LIKE_POST}_ERROR`,
+				payload: { errorMsg: error.message, errorCode: error.code }
+			});
 		}
 	});
 };

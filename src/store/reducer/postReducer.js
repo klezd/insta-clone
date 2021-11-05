@@ -3,7 +3,9 @@ import {
 	GET_USER_POSTS,
 	GET_POST,
 	GET_ALL_POSTS,
-	DELETE_POST
+	DELETE_POST,
+	RELOAD,
+	LIKE_POST
 } from '../types';
 
 const initialState = {
@@ -20,6 +22,9 @@ function postReducer(state = initialState, action) {
 	const { type, payload } = action;
 
 	switch (type) {
+		case RELOAD:
+			return initialState;
+
 		case `${UPLOAD_POST}_PENDING`:
 		case `${GET_USER_POSTS}_PENDING`:
 		case `${GET_POST}_PENDING`:
@@ -72,6 +77,52 @@ function postReducer(state = initialState, action) {
 				...state,
 				dataLoading: false,
 				currentPost: payload.data
+			};
+
+		case `${LIKE_POST}_SUCCESS`: {
+			const currentPostId = state.currentPost.id;
+			const currentPost = state.currentPost;
+			if (payload.postId === currentPostId) {
+				const likeCount = currentPost['likeCount']
+					? currentPost['likeCount']
+					: 0;
+				if (payload.isLike) {
+					currentPost['likeCount'] = likeCount + 1;
+				} else {
+					if (likeCount > 0) {
+						currentPost['likeCount'] = likeCount - 1;
+					} else {
+						currentPost['likeCount'] = 0;
+					}
+				}
+			}
+
+			const allPosts = state.allPosts;
+			if (allPosts) {
+				const post = allPosts[payload.postId];
+				if (post) {
+					const likeCount = post['likeCount'] ? post['likeCount'] : 0;
+					if (payload.isLike) {
+						allPosts[payload.postId]['likeCount'] = likeCount + 1;
+					} else {
+						if (likeCount > 0) {
+							allPosts[payload.postId]['likeCount'] = likeCount - 1;
+						} else {
+							currentPost['likeCount'] = 0;
+						}
+					}
+				}
+			}
+			return {
+				...state,
+				currentPost
+			};
+		}
+		case `${LIKE_POST}_ERROR`:
+			return {
+				...state,
+				errorCode: payload.errorCode,
+				errorMsg: payload.errorMsg
 			};
 
 		default:

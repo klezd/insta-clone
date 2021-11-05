@@ -15,10 +15,11 @@ import UploadPhoto from '../components/UploadPhoto';
 
 import Feed from './Feed';
 import User from './User';
-import Post from './Post';
+import Post from './Post/Post';
 import Error from './Error';
 
 import { getUser, logout } from '../store/action/userAction';
+import { reload } from '../store/action/postAction';
 
 import '../App.css';
 import styles from './styles.module.css';
@@ -55,9 +56,10 @@ export default function Main() {
 	const openUploadPhoto = () => {
 		if (user !== null) {
 			setDisplayPopup('uploadphoto');
+			dispatch(reload());
 		} else {
 			localStorage.setItem('errorMsg', 'You must login first!');
-			setDisplayPopup('auth');
+			openAuth();
 		}
 	};
 
@@ -103,7 +105,9 @@ export default function Main() {
 					<Route path="/my-profile">
 						<User openUploadPhoto={openUploadPhoto} />
 					</Route>
-					<Route path="/post/:id" component={Post} />
+					<Route path="/post/:id">
+						<Post openAuth={openAuth} />
+					</Route>
 					<Route component={Error} />
 				</Switch>
 			</div>

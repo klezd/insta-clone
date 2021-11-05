@@ -1,0 +1,95 @@
+.PageRoot {
+  width: 80%;
+  max-width: 1170px;
+  padding: 12px;
+}
+
+.navPage {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+}
+
+.navPage img {
+  width: 60px;
+  border-radius: 50%;
+}
+
+.navPage div {
+  display: flex;
+  align-items: center;
+}
+
+.navLeft {
+  padding-left: 12px;
+}
+
+.navLeft:hover {
+  cursor: pointer;
+}
+
+.navLeft div {
+  margin-left: 12px;
+}
+
+.postContent {
+  max-height: 500px;
+}
+
+.postContent img {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid var(--light-grey);
+  max-width: 90%;
+  height: inherit;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.postContent>div {
+  text-align: justify;
+  padding: 24px;
+}
+
+.pageNoContent span {
+  font-weight: 500;
+  color: var(--primary-text);
+}
+
+.pageNoContent span:hover {
+  color: var(--primary-text-hover);
+  cursor: pointer;
+}
+
+.actionPanel {
+  display: flex;
+  padding: 16px 4px !important;
+  justify-content: space-between;
+}
+
+.actionPanel div {
+  display: flex;
+  margin: 0 12px;
+  font-size: 18px;
+}
+
+.actionPanel .actionBtn:hover {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1201px) {
+}
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 600px) {
+  .actionPanel div {
+    justify-content: space-between;
+    font-size: 18px;
+  }
+
+  .actionPanel div.stretch {
+    width: 100%;
+  }
+}

@@ -16,14 +16,23 @@ export default function ImageInput(props) {
 		let file = e.target.files[0]; // get the supplied file
 		// if there is a file, set image to that file
 		if (file) {
+			// Modify image name to make it unique
+			const indexOfLastDot = file.name.lastIndexOf('.');
+			const imageNameWithoutSuffix = file.name.substring(0, indexOfLastDot);
+			const imageSuffix = file.name.substring(indexOfLastDot + 1);
+			const newImageName =
+				imageNameWithoutSuffix + '_' + Date.now() + '.' + imageSuffix;
+			file[name] = newImageName;
+			console.log(file);
+
 			reader.onload = () => {
 				if (reader.readyState === 2) {
 					setImage(file);
 					if (setChange) setChange(true);
 				}
 			};
-			reader.readAsDataURL(e.target.files[0]);
-			setImageURL(URL.createObjectURL(e.target.files[0]));
+			reader.readAsDataURL(file);
+			setImageURL(URL.createObjectURL(file));
 			// if there is no file, set image back to null
 		} else {
 			setImage(null);
